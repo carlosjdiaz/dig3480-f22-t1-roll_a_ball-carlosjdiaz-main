@@ -54,6 +54,12 @@ public class PlayerController : MonoBehaviour
             // Run the 'SetCountText()' function (see below)
             SetCountText();
         }
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.gameObject.SetActive(false);
+            count = count - 1;
+            SetCountText();
+        }
     }
 
     void OnMove(InputValue value)
