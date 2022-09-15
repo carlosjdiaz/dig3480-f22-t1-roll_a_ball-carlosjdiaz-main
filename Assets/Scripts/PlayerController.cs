@@ -74,10 +74,9 @@ public class PlayerController : MonoBehaviour
     {
         countText.text = "Count: " + count.ToString();
 
-        if (count >= 12)
+        if (count == 12) 
         {
-            // Set the text value of your 'winText'
-            winTextObject.SetActive(true);
+            transform.position = new Vector3(50.0f, 0.0f, 50.0f); 
         }
     }
 }
