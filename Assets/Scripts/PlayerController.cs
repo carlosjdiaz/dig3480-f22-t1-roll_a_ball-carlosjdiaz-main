@@ -11,26 +11,30 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
-
+    public GameObject loseTextObject;
+    public TextMeshProUGUI livesText;
     private float movementX;
     private float movementY;
 
     private Rigidbody rb;
     private int count;
-
+    private int lives;
     // At the start of the game..
     void Start()
     {
         // Assign the Rigidbody component to our private rb variable
         rb = GetComponent<Rigidbody>();
 
-        // Set the count to zero 
+        // Set the count to zero
+        
         count = 0;
-
+        lives = 3;
         SetCountText();
+        SetLivesText();
 
         // Set the text property of the Win Text UI to an empty string, making the 'You Win' (game over message) blank
         winTextObject.SetActive(false);
+        loseTextObject.SetActive(false);
     }
 
     void FixedUpdate()
@@ -57,8 +61,8 @@ public class PlayerController : MonoBehaviour
         else if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.SetActive(false);
-            count = count - 1;
-            SetCountText();
+            lives = lives - 1;
+            SetLivesText();
         }
     }
 
@@ -70,13 +74,29 @@ public class PlayerController : MonoBehaviour
         movementY = v.y;
     }
 
+    void SetLivesText()
+    {
+        livesText.text = "Lives: " + lives.ToString();
+        if (lives == 0)
+        { // Set the text value of your 'winText'
+            loseTextObject.SetActive(true);
+            transform.position = new Vector4(100.0f, 0.0f, 100.0f);
+
+        }
+    }
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
 
-        if (count == 12) 
+        if (count == 12)
         {
-            transform.position = new Vector3(50.0f, 0.0f, 50.0f); 
+            transform.position = new Vector3(50.0f, 0.0f, 50.0f);
+        }
+        else if (count >= 20)
+        {
+            // Set the text value of your 'winText'
+            winTextObject.SetActive(true);
+            transform.position = new Vector4(100.0f, 0.0f, 100.0f);
         }
     }
 }
